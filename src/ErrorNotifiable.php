@@ -3,8 +3,10 @@
 namespace Pyaesone17\Lapse;
 
 use Pyaesone17\Lapse\Notifications\RemindExceptionNotification;
+use Illuminate\Notifications\Notifiable;
 use Notification;
 use Throwable;
+use Exception;
 
 trait ErrorNotifiable
 {
@@ -24,8 +26,14 @@ trait ErrorNotifiable
             
             try {
                 $user = $closure();
-                $notifiable = Notification::route('slack', config('lapse.slack_channel'))->route('database',$user);
+
+                if (! $user instanceof Notifiable) {
+                    throw new Exception(get_class($user).' must be notifiable object');
+                }
+
+                $notifiable = Notification::route('slack', config('lapse.slack_channel'))->route('database',$user->notifications());
                 $notifiable->notify(new RemindExceptionNotification($exception));
+                
             } catch (Throwable $t) {
                 dd($t);
             }

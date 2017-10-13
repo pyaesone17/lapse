@@ -52,7 +52,8 @@ class LapseController extends Controller
 
     protected function getExceptionData($request)
     {
-        $logs = DatabaseNotification::latest()->paginate($request->per_page);
+        $logs = DatabaseNotification::where('type','=','Pyaesone17\Lapse\Notifications\RemindExceptionNotification')
+        ->latest()->paginate($request->per_page);
         
         $logs->each(function ($log)
         {

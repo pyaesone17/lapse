@@ -19,6 +19,7 @@ class LapseServiceProvider extends ServiceProvider
         $this->registerCommands();
         $this->registerResources();
         $this->defineAssetPublishing();
+        $this->registerConfig();
     }
 
     /**

@@ -54,6 +54,8 @@ after that register In the report method like this.
             // It can be super admin, admin or normal user,
             // Anything but at least you have to provide one model
             // It is require for database notification
+            // and it must be notifiable object, it means class must use
+            // Illuminate\Notifications\Notifiable trait
             return \App\User::first();
         });
     }
