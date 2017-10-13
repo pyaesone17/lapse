@@ -21,22 +21,20 @@ trait ErrorNotifiable
         if ($this->shouldntReport($exception) || app()->runningInConsole()) {
             return;
         }
-        
-        if( app()->environment()!='local' ){
-            
-            try {
-                $user = $closure();
+                    
+        try {
+            $user = $closure();
+            $classes  = class_uses($user);
 
-                if (! $user instanceof Notifiable) {
-                    throw new Exception(get_class($user).' must be notifiable object');
-                }
-
-                $notifiable = Notification::route('slack', config('lapse.slack_channel'))->route('database',$user->notifications());
-                $notifiable->notify(new RemindExceptionNotification($exception));
-                
-            } catch (Throwable $t) {
-                dd($t);
+            if (! in_array('Illuminate\Notifications\Notifiable', $classes)) {
+                throw new Exception(get_class($user).' must be notifiable object');
             }
+
+            $notifiable = Notification::route('slack', config('lapse.slack_channel'))->route('database',$user->notifications());
+            $notifiable->notify(new RemindExceptionNotification($exception));
+            
+        } catch (Throwable $t) {
+            dd($t);
         }
     }
 }

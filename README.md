@@ -48,16 +48,18 @@ after that register In the report method like this.
 ``` php
     public function report(Exception $exception)
     {
-        $this->sendNotification($exception, function ()
-        {
-            // Here you must provide one user,
-            // It can be super admin, admin or normal user,
-            // Anything but at least you have to provide one model
-            // It is require for database notification
-            // and it must be notifiable object, it means class must use
-            // Illuminate\Notifications\Notifiable trait
-            return \App\User::first();
-        });
+        if( app()->environment()!='local' ){ // Remove this line if you want lapse to notify in local environment
+            $this->sendNotification($exception, function ()
+            {
+                // Here you must provide one user,
+                // It can be super admin, admin or normal user,
+                // Anything but at least you have to provide one model
+                // It is require for database notification
+                // and it must be notifiable object, it means class must use
+                // Illuminate\Notifications\Notifiable trait
+                return \App\User::first();
+            });
+        }
     }
 ```
 
