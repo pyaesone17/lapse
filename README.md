@@ -1,5 +1,5 @@
 
-![Example](https://raw.githubusercontent.com/pyaesone17/laravel-lapse/master/lapse.png)
+![Example](https://raw.githubusercontent.com/pyaesone17/lapse/master/lapse.png)
 
 ## Introducing
 
