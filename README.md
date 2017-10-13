@@ -11,7 +11,7 @@ Moreover it can notify you via Slack channel and Email alert. In future, I will 
 Install Via Composer
 
 ``` bash
-$ composer require laravel-lapse
+$ composer require pyaesone17/lapse
 ```
 
 Publish vendor
