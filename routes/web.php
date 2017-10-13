@@ -1,5 +1,5 @@
 <?php
 
-Route::get('/', 'ErrorController@index')->name('index');
-Route::get('/detail/{id?}', 'ErrorController@detail')->name('detail');
-Route::get('/{id}', 'ErrorController@index');
+Route::get('/', 'LapseController@index')->name('index');
+Route::get('/detail/{id?}', 'LapseController@detail')->name('detail');
+Route::get('/{id}', 'LapseController@index');

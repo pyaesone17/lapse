@@ -4,9 +4,20 @@ namespace Pyaesone17\Lapse\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Notifications\DatabaseNotification;
 use Illuminate\Http\Request;
+use Pyaesone17\Lapse\Http\Middleware\Authenticate;
 
-class ErrorController extends Controller
+class LapseController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware(Authenticate::class);
+    }
+
     /**
      * Display a listing of the resource.
      *

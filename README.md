@@ -59,6 +59,18 @@ after that register In the report method like this.
     }
 ```
 
+Laravel Totem's dashboard is inspired by Laravel Horizon. Just like Horizon you can configure authentication to Lapse's dashboard. Add the following to the boot method of your AppServiceProvider. Here you could also check role permision and limit
+the dasboard.
+
+``` php
+    \Pyaesone17\Lapse\Lapse::auth(function($request) {
+        // return true / false . For e.g.
+        return \Auth::check();
+    });
+```
+To view the dashboard point your browser to /lapse of your app. For e.g. laravel.dev/lapse.
+But the app is in local environment, lapse will not even attend to validate auth, It will display it all.
+
 Currently deleting lapse message doesn't support via UI. To delete all lapse message please run
 ``` bash
 $ php artisan clear:lapse
