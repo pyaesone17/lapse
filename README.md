@@ -20,6 +20,19 @@ Publish vendor
 $ php artisan vendor:publish
 ```
 
+Add slack hook url in config/lapse.php and define channels
+
+``` php
+  'slack_channel' => 'https://hooks.slack.com/services/......',
+    // Currently three notification channels supported
+    // Those are database, slack and email
+    'via' => ['database', 'slack']
+```
+
+``` bash
+$ php artisan vendor:publish
+```
+
 Migrate notification table
 
 ``` bash
