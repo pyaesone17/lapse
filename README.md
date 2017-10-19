@@ -41,9 +41,7 @@ php artisan migrate
 ```
 ## Usage
 
-Include the trait "Pyaesone17\ErrorNotification\ErrorNotifiable::class" in Exceptions/Handler::class first.
-
-after that register In the report method like this.
+Include the trait `"Pyaesone17\ErrorNotification\ErrorNotifiable::class"` in `Exceptions/Handler::class` first. After that register In the report method like this.
 
 ``` php
     public function report(Exception $exception)
@@ -72,10 +70,11 @@ the dasboard.
         return \Auth::check();
     });
 ```
-To view the dashboard point your browser to /lapse of your app. For e.g. laravel.dev/lapse.
+To view the dashboard point your browser to /lapse of your app. For e.g. `laravel.dev/lapse`.
 But the app is in local environment, lapse will not even attend to validate auth, It will display it all.
 
 Currently deleting lapse message doesn't support via UI. To delete all lapse message please run
+
 ``` bash
 $ php artisan clear:lapse
 ```
