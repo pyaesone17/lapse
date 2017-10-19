@@ -41,25 +41,40 @@ php artisan migrate
 ```
 ## Usage
 
-Include the trait "Pyaesone17\ErrorNotification\ErrorNotifiable::class" in Exceptions/Handler::class first.
+Include the trait "Pyaesone17\Lapse\ErrorNotifiable" in Exceptions/Handler::class first.
 
 after that register In the report method like this.
 
 ``` php
-    public function report(Exception $exception)
+
+    use Pyaesone17\Lapse\ErrorNotifiable;
+    
+    ..
+    
+    class Handler extends ExceptionHandler
     {
-        if( app()->environment()!='local' ){ // Remove this line if you want lapse to notify in local environment
-            $this->sendNotification($exception, function ()
-            {
-                // Here you must provide one user,
-                // It can be super admin, admin or normal user,
-                // Anything but at least you have to provide one model
-                // It is require for database notification
-                // and it must be notifiable object, it means class must use
-                // Illuminate\Notifications\Notifiable trait
-                return \App\User::first();
-            });
+        use ErrorNotifiable;
+
+        ...
+    
+        public function report(Exception $exception)
+        {
+            if( app()->environment()!='local' ){ // Remove this line if you want lapse to notify in local environment
+                $this->sendNotification($exception, function ()
+                {
+                    // Here you must provide one user,
+                    // It can be super admin, admin or normal user,
+                    // Anything but at least you have to provide one model
+                    // It is require for database notification
+                    // and it must be notifiable object, it means class must use
+                    // Illuminate\Notifications\Notifiable trait
+                    return \App\User::first();
+                });
+            }
         }
+        
+        ...
+        
     }
 ```
 
