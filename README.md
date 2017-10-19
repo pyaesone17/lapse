@@ -77,7 +77,7 @@ after that register In the report method like this.
     }
 ```
 
-Laravel Totem's dashboard is inspired by Laravel Horizon. Just like Horizon you can configure authentication to Lapse's dashboard. Add the following to the boot method of your AppServiceProvider. Here you could also check role permision and limit
+Laravel Lapse's dashboard is inspired by Laravel Horizon. Just like Horizon you can configure authentication to Lapse's dashboard. Add the following to the boot method of your AppServiceProvider. Here you could also check role permision and limit
 the dasboard.
 
 ``` php
