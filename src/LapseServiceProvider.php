@@ -15,6 +15,8 @@ class LapseServiceProvider extends ServiceProvider
     public function boot()
     {
         app('router')->aliasMiddleware('cors', \Pyaesone17\Lapse\Http\Middleware\CORS::class);
+        $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
+        
         $this->registerRoutes();
         $this->registerCommands();
         $this->registerResources();

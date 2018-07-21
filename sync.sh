@@ -1,0 +1,1 @@
+cp -r public/ ../pack/public/vendor/lapse

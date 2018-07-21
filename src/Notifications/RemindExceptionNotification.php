@@ -71,23 +71,6 @@ class RemindExceptionNotification extends Notification
     }
 
     /**
-     * Get the array representation of the notification.
-     *
-     * @param  mixed  $notifiable
-     * @return array
-     */
-    public function toDatabase($notifiable)
-    {
-        return [
-            'class' => get_class($this->exception),
-            'title' => $this->exception->getMessage(),
-            'content' => $this->exception->__toString(),
-            'url' => url()->current(),
-            'user_id' => auth()->check() ? auth()->user()->id : ''
-        ];
-    }
-
-    /**
      * Get the Slack representation of the notification.
      *
      * @param  mixed  $notifiable

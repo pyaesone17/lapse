@@ -3,6 +3,7 @@
 namespace Pyaesone17\Lapse\Commands;
 
 use Illuminate\Console\Command;
+use Pyaesone17\Lapse\Models\Lapse;
 use DB;
 
 class ClearLapse extends Command
@@ -38,8 +39,6 @@ class ClearLapse extends Command
      */
     public function handle()
     {
-        DB::table('notifications')
-        ->where('type','=','Pyaesone17\Lapse\Notifications\RemindExceptionNotification')
-        ->delete();
+        Lapse::truncate();
     }
 }

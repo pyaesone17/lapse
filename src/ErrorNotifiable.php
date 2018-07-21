@@ -4,6 +4,8 @@ namespace Pyaesone17\Lapse;
 
 use Pyaesone17\Lapse\Notifications\RemindExceptionNotification;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Notifications\AnonymousNotifiable;
+use Pyaesone17\Lapse\Models\Lapse;
 use Notification;
 use Throwable;
 use Exception;
@@ -12,29 +14,52 @@ trait ErrorNotifiable
 {
     /**
      * Send notification via laravel notification channels
-     * 
+     *
      * @param  Exception $e
      * @return boolean
      */
-    public function sendNotification($exception, $closure)
+    public function sendNotification($exception)
     {
         if ($this->shouldntReport($exception) || app()->runningInConsole()) {
             return;
         }
                     
         try {
-            $user = $closure();
-            $classes  = class_uses($user);
-
-            if (! in_array('Illuminate\Notifications\Notifiable', $classes)) {
-                throw new Exception(get_class($user).' must be notifiable object');
-            }
-
-            $notifiable = Notification::route('slack', config('lapse.slack_channel'))->route('database',$user->notifications());
-            $notifiable->notify(new RemindExceptionNotification($exception));
-            
+            $this->storeLapse($exception);
+            $notification = $this->getNotification();
+            $notification->notify(new RemindExceptionNotification($exception));
         } catch (Throwable $t) {
             dd($t);
         }
+    }
+
+    protected function getNotification(Type $var = null)
+    {
+        return $this->getDefaultNotification();
+    }
+
+    protected function getDefaultNotification()
+    {
+        $anonymousNotification = new AnonymousNotifiable();
+        $channels = config('lapse.channels');
+
+        foreach ($channels as $key => $channel) {
+            $anonymousNotification->route($key, $channel);
+        }
+   
+        return $anonymousNotification;
+    }
+
+    protected function storeLapse($exception)
+    {
+        Lapse::create([
+            'class' => get_class($exception),
+            'title' => $exception->getMessage(),
+            'content' => $exception->__toString(),
+            'url' => url()->current(),
+            'payload' => json_encode(request()->all()),
+            'method' => request()->method(),
+            'user_id' => auth()->check() ? auth()->user()->id : null
+        ]);
     }
 }

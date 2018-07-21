@@ -1,8 +1,11 @@
 <?php 
 
 return [
-    'slack_channel' => 'https://hooks.slack.com/services/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',
+    'channels' => [
+        'slack' => 'https://hooks.slack.com/services/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',
+        // 'mail' => 'promise286@gmail.com',
+    ],
     // Currently three notification channels supported
     // Those are database, slack and email
-    'via' => ['database', 'slack']
+    'via' => ['slack']
 ];

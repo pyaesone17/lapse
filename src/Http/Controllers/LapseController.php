@@ -2,9 +2,9 @@
 
 namespace Pyaesone17\Lapse\Http\Controllers;
 use App\Http\Controllers\Controller;
-use Illuminate\Notifications\DatabaseNotification;
 use Illuminate\Http\Request;
 use Pyaesone17\Lapse\Http\Middleware\Authenticate;
+use Pyaesone17\Lapse\Models\Lapse;
 
 class LapseController extends Controller
 {
@@ -25,45 +25,54 @@ class LapseController extends Controller
      */
     public function index(Request $request)
     {
-
-        if ($request->ajax()) {
-            return $this->getExceptionData($request);
+        $lapses = Lapse::latest()->paginate($request->per_page);
+        if($request->wantsJson()){
+            return response()->json([ 'data' => $lapses ],200);
         }
-
-        return view('lapse::app');
+        return view('lapse::index',compact('lapses'));
     }
 
     /**
-     * Display a listing of the resource.
+     * Display the detail of the lapse
      *
      * @return \Illuminate\Http\Response
      */
     public function detail(Request $request)
     {
-        $log = DatabaseNotification::find($request->id);    
-        $log->class = $log->data['class'];
-        $log->title = $log->data['title'];
-        $log->content = $log->data['content'];
-        $log->user_id = $log->data['user_id'];
-        $log->url = $log->data['url'];
-
-        return response()->json($log, 200);
+        $lapse = Lapse::find($request->id);    
+        if($request->wantsJson()){
+            return response()->json([ 'data' => $lapse ],200);
+        }
+        return view('lapse::detail',compact('lapse'));
     }
 
-    protected function getExceptionData($request)
+    /**
+     * Delete the record
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Request $request, $id)
     {
-        $logs = DatabaseNotification::where('type','=','Pyaesone17\Lapse\Notifications\RemindExceptionNotification')
-        ->latest()->paginate($request->per_page);
-        
-        $logs->each(function ($log)
-        {
-            $log->class = $log->data['class'];
-            $log->title = $log->data['title'];
-            $log->content = $log->data['content'];
-            $log->user_id = $log->data['user_id'];
-            $log->url = $log->data['url'];
-        });
+        Lapse::findOrFail($id)->delete();    
+        if($request->wantsJson()){
+            return response()->json([ 'data' => $id ],200);
+        }
 
-        return response()->json($logs, 200);
+        return redirect()->route('lapse.index');
+    }
+
+    /**
+     * Delete all of the records
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function clear(Request $request)
+    {
+        Lapse::truncate();    
+        if($request->wantsJson()){
+            return response()->json([],200);
+        }
+
+        return redirect()->back();
     }
 }
