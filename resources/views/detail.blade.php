@@ -9,7 +9,7 @@
 <div class="wrap-table">
     <div class="table" style="border-radius: 0">
         <div>
-        <h3>{{ $lapse->title }}</h3>
+        <h3>{{ $lapse->title }}</h3> 
         <br/>
         <h6>Class : <span style="color: #666666"> {{ $lapse->class }}</span> </h6>
         <br/>
@@ -18,6 +18,8 @@
         <h6>Method : <span style="color: #666666"> {{ $lapse->method }} </span> </h6>
         <br/>
         <h6>Payload : <span style="color: #666666"> {{ $lapse->payload }} </span> </h6>
+        <br/>
+        <h6>Time : <span style="color: #666666"> {{ $lapse->created_at->format("D M Y h:i:s") }} </span> </h6>
         <br/>
         <p style="font-size: 14px; color: #7ec699; background: #292C33; padding: 20px; border-radius: 10px">{{ $lapse->content }}</p>
         </div>
