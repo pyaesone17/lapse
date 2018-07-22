@@ -9,6 +9,8 @@ http://laravel-notification-channels.com/.
 
 Lapse behind the scence depend on https://laravel.com/docs/5.6/notifications. So if you want to know more, please kindly check the link.
 
+For old version please see documentation at https://github.com/pyaesone17/lapse/tree/v1
+
 ## Install
 
 Install Via Composer
