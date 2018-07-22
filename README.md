@@ -4,7 +4,10 @@
 ## Introducing
 
 Lapse provides a beautiful dashboard to track your errors in production without having to look up log file. 
-Moreover it can notify you via Slack channel and Email alert. In future, I will add more channels.
+Moreover it can notify you via Slack channel and Email alert. And moreover it can notify you via all of the channels from
+http://laravel-notification-channels.com/.
+
+Lapse behind the scence depend on https://laravel.com/docs/5.6/notifications. So if you want to know more, please kindly check the link.
 
 ## Install
 
