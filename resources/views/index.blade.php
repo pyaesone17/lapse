@@ -43,7 +43,7 @@
                             {{ $lapse->user_id or 'unknown' }}
                         </div>
                         <div class="cell" data-title="User">
-                            {{ $lapse->created_at->format("D M Y H M S") }}
+                            {{ $lapse->created_at->format("D M Y h:i:s") }}
                         </div>
                     </a>
                 @endforeach
