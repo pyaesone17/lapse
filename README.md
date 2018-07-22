@@ -11,7 +11,7 @@ Lapse behind the scence depend on https://laravel.com/docs/5.6/notifications. So
 
 For old version please see documentation at https://github.com/pyaesone17/lapse/tree/v1
 
-## Usage
+## Upgrade Guide
 If you are upgrading from version 1.
 
 Please delete config/lapse.php file first.
