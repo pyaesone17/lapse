@@ -23,7 +23,7 @@ Publish vendor
 $ php artisan vendor:publish
 ```
 
-Add slack hook url in config/lapse.php and define channels
+Add slack hook url in config/lapse.php and define channels ( https://api.slack.com/incoming-webhooks )
 
 ``` php
     'channels' => [
