@@ -23,20 +23,22 @@ $ php artisan vendor:publish
 Add slack hook url in config/lapse.php and define channels
 
 ``` php
-  'slack_channel' => 'https://hooks.slack.com/services/......',
-    // Currently three notification channels supported
-    // Those are database, slack and email
-    'via' => ['database', 'slack']
+    'channels' => [
+        'slack' => 'https://hooks.slack.com/services/......',
+        'mail' => 'your@mail.com'
+    ],
+    // Currently two notification channels supported
+    // Those are slack and email
+    'via' => ['slack']
 ```
 
 ``` bash
 $ php artisan vendor:publish
 ```
 
-Migrate notification table
+Migrate lapses table
 
 ``` bash
-php artisan notifications:table
 php artisan migrate
 ```
 ## Usage
@@ -47,33 +49,20 @@ after that register In the report method like this.
 ``` php
 
     use Pyaesone17\Lapse\ErrorNotifiable;
-    
     ..
     
     class Handler extends ExceptionHandler
     {
         use ErrorNotifiable;
-
         ...
     
         public function report(Exception $exception)
         {
             if( app()->environment()!='local' ){ // Remove this line if you want lapse to notify in local environment
-                $this->sendNotification($exception, function ()
-                {
-                    // Here you must provide one user,
-                    // It can be super admin, admin or normal user,
-                    // Anything but at least you have to provide one model
-                    // It is require for database notification
-                    // and it must be notifiable object, it means class must use
-                    // Illuminate\Notifications\Notifiable trait
-                    return \App\User::first();
-                });
+                $this->sendNotification($exception);
             }
         }
-        
-        ...
-        
+        ...  
     }
 ```
 
@@ -89,10 +78,86 @@ the dasboard.
 To view the dashboard point your browser to /lapse of your app. For e.g. `laravel.dev/lapse`.
 But the app is in local environment, lapse will not even attend to validate auth, It will display it all.
 
-Currently deleting lapse message doesn't support via UI. To delete all lapse message please run
+To delete all lapse message via cli , please run
 
 ``` bash
 $ php artisan clear:lapse
+```
+
+## Custom Notification Channel
+
+you can use all notifications from http://laravel-notification-channels.com/ to integrate with lapse
+
+For example, Telegram
+
+install channel via composer
+
+``` bash
+    $ composer require laravel-notification-channels/telegram
+```
+
+configure the config/lapse.php first
+
+``` php
+    use NotificationChannels\Telegram\TelegramChannel;
+    'channels' => [
+        'slack' => 'https://hooks.slack.com/services/......',
+        'telegram' => 'tele_gram_user_id', //optional
+    ],
+    // Currently two notification channels supported
+    // Those are slack and email
+    'via' => ['slack', TelegramChannel::class]
+```
+
+register telegram provider
+
+``` php
+// config/app.php
+'providers' => [
+    ...
+    NotificationChannels\Telegram\TelegramServiceProvider::class,
+],
+```
+
+Set credentials
+```php
+    // config/services.php
+    'telegram-bot-api' => [
+        'token' => env('TELEGRAM_BOT_TOKEN', 'YOUR BOT TOKEN HERE')
+    ],
+```
+
+Add the formatter for notificaiton
+``` php
+    use NotificationChannels\Telegram\TelegramMessage;
+    use Pyaesone17\Lapse\ErrorNotifiable;
+    ..
+    
+    class Handler extends ExceptionHandler
+    {
+        use ErrorNotifiable;
+        ...
+    
+        public function report(Exception $exception)
+        {
+            if( app()->environment()!='local' ){ // Remove this line if you want lapse to notify in local environment
+                $this->sendNotification($exception, $this->getFormatters());
+            }
+        }
+
+        protected function getFormatters()
+        {
+            $formatters = array(
+                'toTelegram' => function($notifiable) {
+                    return TelegramMessage::create()
+                    ->content("*HELLO!* \n One of your invoices has been paid!");
+                }
+            );
+
+            return $formatters;
+        }
+        ...  
+    }
 ```
 
 ## Security
