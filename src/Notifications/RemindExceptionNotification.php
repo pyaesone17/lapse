@@ -18,9 +18,10 @@ class RemindExceptionNotification extends Notification
      *
      * @return void
      */
-    public function __construct($exception)
+    public function __construct($exception, $formatting = [])
     {
         $this->exception = $exception;
+        $this->formatting = $formatting;
     }
 
     /**
@@ -93,5 +94,16 @@ class RemindExceptionNotification extends Notification
                 $attachment->title($title, $url)
                 ->content($this->exception->__toString());
             });
+    }
+
+    public function __call($name, $arguments)
+    {
+        if(array_key_exists($name,$this->formatting)){
+            $formatter = $this->formatting[$name];
+            if(is_callable($formatter) === false){
+                throw new NotificationFormatterException("Notification formatter must be callable");
+            }
+            return $formatter($arguments[0]);
+        }
     }
 }

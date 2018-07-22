@@ -47,7 +47,10 @@
                         </div>
                     </a>
                 @endforeach
-                {!! $lapses->render() !!}
+                <div>
+                    <br/>
+                    {!! $lapses->render() !!}
+                </div>
             </div>
         </div>
     @endIf

@@ -18,7 +18,7 @@ trait ErrorNotifiable
      * @param  Exception $e
      * @return boolean
      */
-    public function sendNotification($exception)
+    public function sendNotification($exception, $formatters = [])
     {
         if ($this->shouldntReport($exception) || app()->runningInConsole()) {
             return;
@@ -27,13 +27,13 @@ trait ErrorNotifiable
         try {
             $this->storeLapse($exception);
             $notification = $this->getNotification();
-            $notification->notify(new RemindExceptionNotification($exception));
+            $notification->notify(new RemindExceptionNotification($exception, $formatters));
         } catch (Throwable $t) {
             dd($t);
         }
     }
 
-    protected function getNotification(Type $var = null)
+    protected function getNotification()
     {
         return $this->getDefaultNotification();
     }

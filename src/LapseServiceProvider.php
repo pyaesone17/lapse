@@ -51,7 +51,7 @@ class LapseServiceProvider extends ServiceProvider
             'prefix' => 'lapse',
             'as' => 'lapse.',
             'namespace' => 'Pyaesone17\Lapse\Http\Controllers',
-            'middleware' => ['web', 'cors'],
+            'middleware' => ['api', 'cors'],
         ], function () {
             $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
         });

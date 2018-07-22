@@ -17,7 +17,7 @@ class CreateLapsesTable extends Migration
             $table->increments('id');
             $table->integer('user_id')->unsigned()->nullable();
             $table->string('class');
-            $table->string('title');
+            $table->text('title');
             $table->string('url');
             $table->json('payload');
             $table->string('method');
