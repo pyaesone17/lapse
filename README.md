@@ -1,5 +1,5 @@
 
-![Example](https://raw.githubusercontent.com/pyaesone17/lapse/master/lapse.png)
+![Example](https://raw.githubusercontent.com/pyaesone17/lapse/master/lapse_v2.png)
 
 ## Introducing
 
