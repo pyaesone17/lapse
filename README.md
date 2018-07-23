@@ -53,7 +53,7 @@ php artisan migrate
 ```
 ## Usage
 
-after that register In the report method like this.
+after that register In the report method of App\Exceptions\Handler like this.
 
 
 ``` php
