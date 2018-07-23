@@ -20,7 +20,7 @@ trait ErrorNotifiable
      */
     public function sendNotification($exception, $formatters = [])
     {
-        if ($this->shouldntReport($exception) || app()->runningInConsole()) {
+        if ($this->shouldntReport($exception)) {
             return;
         }
                     
