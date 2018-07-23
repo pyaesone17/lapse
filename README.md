@@ -39,6 +39,8 @@ Add slack hook url in config/lapse.php and define channels ( https://api.slack.c
     ],
     // Currently two notification channels supported
     // Those are slack and email
+    // But you can use all of the notifications from http://laravel-notification-channels.com/
+    // See the custom channel of my read me file to explore how to integrate
     'via' => ['slack']
 ```
 
@@ -114,7 +116,7 @@ configure the config/lapse.php first
         'slack' => 'https://hooks.slack.com/services/......',
         'telegram' => 'tele_gram_user_id', //optional
     ],
-    // Currently two notification channels supported
+    // Currently two notification channels is supported built in
     // Those are slack and email
     'via' => ['slack', TelegramChannel::class]
 ```
