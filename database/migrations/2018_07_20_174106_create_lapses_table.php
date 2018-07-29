@@ -19,7 +19,11 @@ class CreateLapsesTable extends Migration
             $table->string('class');
             $table->text('title');
             $table->string('url');
-            $table->json('payload');
+            if ((DB::connection()->getPdo()->getAttribute(PDO::ATTR_DRIVER_NAME) == 'mysql') && version_compare(DB::connection()->getPdo()->getAttribute(PDO::ATTR_SERVER_VERSION), '5.7.8', 'ge')) {
+                $table->json('payload');
+            } else {
+                $table->text('payload');
+            }
             $table->string('method');
             $table->text('content');
             $table->timestamps();
