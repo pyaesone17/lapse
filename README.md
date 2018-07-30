@@ -7,7 +7,16 @@ Lapse provides a beautiful dashboard to track your errors in production without 
 Moreover it can notify you via Slack channel and Email alert. And moreover it can notify you via all of the channels from
 http://laravel-notification-channels.com/.
 
-Lapse behind the scence depend on https://laravel.com/docs/5.6/notifications. So if you want to know more, please kindly check the link.
+Lapse behind the scence depend on https://laravel.com/docs/5.6/notifications. 
+It means theoretically Lapses can notify your error via over 30 ways including **Slack, Email, Nexmo, Trello, Telegram, Facebook, Discord, Pusher, Twillo, Twitte**. But I haven't test agaisnt all of the channels, If you find a bug, please submit an issue.
+If you want to know more, please kindly check the link.
+
+For old version please see documentation at https://github.com/pyaesone17/lapse/tree/v1
+
+## Upgrade Guide
+If you are upgrading from version 1.
+
+Please delete config/lapse.php file first.
 
 ## Install
 
@@ -32,6 +41,8 @@ Add slack hook url in config/lapse.php and define channels ( https://api.slack.c
     ],
     // Currently two notification channels supported
     // Those are slack and email
+    // But you can use all of the notifications from http://laravel-notification-channels.com/
+    // See the custom channel of my read me file to explore how to integrate
     'via' => ['slack']
 ```
 
@@ -46,7 +57,7 @@ php artisan migrate
 ```
 ## Usage
 
-after that register In the report method like this.
+after that register In the report method of App\Exceptions\Handler like this.
 
 
 ``` php
@@ -107,7 +118,7 @@ configure the config/lapse.php first
         'slack' => 'https://hooks.slack.com/services/......',
         'telegram' => 'tele_gram_user_id', //optional
     ],
-    // Currently two notification channels supported
+    // Currently two notification channels is supported built in
     // Those are slack and email
     'via' => ['slack', TelegramChannel::class]
 ```
