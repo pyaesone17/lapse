@@ -16,7 +16,7 @@ class LapseServiceProvider extends ServiceProvider
     {
         app('router')->aliasMiddleware('cors', \Pyaesone17\Lapse\Http\Middleware\CORS::class);
         $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
-        
+
         $this->registerRoutes();
         $this->registerCommands();
         $this->registerResources();
@@ -34,7 +34,7 @@ class LapseServiceProvider extends ServiceProvider
         if (! defined('LAPSE_PATH')) {
             define('LAPSE_PATH', realpath(__DIR__.'/../'));
         }
-    
+
         $this->mergeConfigFrom(
             __DIR__.'/../config/lapse.php', 'lapse'
         );
@@ -48,7 +48,7 @@ class LapseServiceProvider extends ServiceProvider
     protected function registerRoutes()
     {
         Route::group([
-            'prefix' => 'lapse',
+            'prefix' => config('lapse.prefix') . '/lapse' ,
             'as' => 'lapse.',
             'namespace' => 'Pyaesone17\Lapse\Http\Controllers',
             'middleware' => ['web', 'cors'],

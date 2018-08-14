@@ -1,6 +1,8 @@
-<?php 
+<?php
 
 return [
+    'prefix' => '',
+
     'channels' => [
         'slack' => 'https://hooks.slack.com/services/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',
         'mail' => 'blahblah@gmail.com',
