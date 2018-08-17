@@ -1,4 +1,15 @@
 <style>
+
+.input-group>.form-control:not(:last-child) {
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+}
+
+.input-group>.form-control:not(:first-child) {
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+}
+
 .container {
   max-width: 960px;
 }
@@ -142,7 +153,6 @@ ul, li {
 input {
   display: block;
 	outline: none;
-	border: none !important;
 }
 
 textarea {
@@ -325,7 +335,6 @@ iframe {
 
 .lapse-body {
   width: 100%;
-  min-height: 100vh;
   display: -webkit-box;
   display: -webkit-flex;
   display: -moz-box;

@@ -25,11 +25,16 @@ class LapseController extends Controller
      */
     public function index(Request $request)
     {
-        $lapses = Lapse::latest()->paginate($request->per_page);
+        $lapses = Lapse::latest()->search($request)->paginate(20);
         if($request->wantsJson()){
             return response()->json([ 'data' => $lapses ],200);
         }
-        return view('lapse::index',compact('lapses'));
+
+        $q = $request->q;
+        $from = $request->from;
+        $to = $request->to;
+
+        return view('lapse::index',compact('lapses','from','to','q'));
     }
 
     /**

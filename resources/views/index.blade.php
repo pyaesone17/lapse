@@ -2,11 +2,28 @@
 
 @section('content')
 <div class="lapse-body">
+    <br/>
     <div>
         <h3 style="text-align: center; margin-bottom: 20px"> LARAVEL LAPSE</h3>
         <h4 style="text-align: center; margin-bottom: 50px">Laravel Self Hosted Error Tracking System</h4>
     </div>
-
+    <div>
+        <form class="form-inline" action="{{ route('lapse.index') }}">
+            <div class="form-group mx-sm-3 mb-2">
+                <input type="text" class="form-control" placeholder="Search" name="q" value="{{$q}}"/>
+            </div>
+            <div class="form-group mx-sm-3 mb-2">
+                <div class="input-group input-daterange datepicker">
+                    <input type="text" class="form-control" name="from" value="{{$from}}" autocomplete="off">
+                    <div class="input-group-addon" style="margin-right:10px; margin-left:10px;">to</div>
+                    <input type="text" class="form-control" name="to" value="{{$to}}" autocomplete="off">
+                </div>
+            </div>
+            <button class="btn btn-primary mb-2">Search</button>
+        </form>
+    </div>
+    <br/>
+    <br/>
     @if($lapses->count())
         <div class="wrap-table100">
             <div class="table">
@@ -51,7 +68,7 @@
         </div>
         <div>
             <br/>
-            {!! $lapses->render() !!}
+            {{ $lapses->appends(['q' => $q, 'from' => $from, 'to' => $to])->links() }}
         </div>
     @endIf
 
@@ -69,3 +86,11 @@
     @endIf
 </div>
 @endsection
+
+@push('js')
+    <script>
+        $('.datepicker').datepicker({
+            format: 'mm/dd/yyyy'
+        });
+    </script>
+@endpush
