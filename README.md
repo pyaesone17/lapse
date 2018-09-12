@@ -174,6 +174,9 @@ Add the formatter for notificaiton
     }
 ```
 
+## New Feature
+If you want new feature, feel free to submit as an issue
+
 ## Security
 
 If you discover any security related issues, please email promise@gmail.com instead of using the issue tracker.
